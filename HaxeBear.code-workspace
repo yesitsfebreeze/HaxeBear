@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "/usr/local/lib/haxe/lib/flixel-addons"
+		}
+	],
+	"settings": {
+		"haxe.diagnosticsPathFilter": "${workspaceRoot}/source"
+	}
+}

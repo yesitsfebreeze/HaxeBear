@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+	
+	<meta title="Divided" package="org.breeze.Divided" version="1.0.0" company="breeze" />
+	<app main="engine.Game" path="Export" file="Divided" />
+	
+	<source path="Source" />
+	
+	<haxelib name="openfl" />
+	<haxelib name="nape-haxe4" />
+	
+	<assets path="Assets" rename="assets" />
+	
+</project>
