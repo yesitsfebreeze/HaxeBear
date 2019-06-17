@@ -15,6 +15,7 @@ class Scene extends Entity {
 	}
 
 	override public function onInit() {
+		this.inputManager = new InputManager(this.game);
 		this.width = this.config.graphics.width;
 		this.height = this.config.graphics.height;
 	}

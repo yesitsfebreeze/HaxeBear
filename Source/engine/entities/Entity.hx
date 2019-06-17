@@ -1,10 +1,10 @@
 package engine.entities;
 
-import openfl.display.Sprite;
+import openfl.display.Shape;
 import engine.Game;
 import engine.GameConfigInterface;
 
-class Entity extends Sprite {
+class Entity extends Shape {
 	private var parentEntity:Entity;
 	private var entities:Array<Entity>;
 	private var game:Game;

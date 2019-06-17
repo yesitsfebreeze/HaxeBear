@@ -4,11 +4,27 @@ import engine.entities.Scene;
 import engine.util.TypeHelper;
 
 class SceneManager {
+	private var game:Game;
+	private var config:GameConfigInterface;
 	private var scenes:Map<String, Scene>;
 	private var activeScene:Scene;
 
-	public function new() {
+	public function new(game) {
+		this.game = game;
+		this.config = game.config;
 		this.scenes = new Map();
+	}
+
+	public function initScenes() {
+		for (scene in this.config.scenes) {
+			scene.init(this.game);
+			this.addScene(scene);
+			if (scene.active) {
+				this.game.scene = scene;
+				var sceneName:String = this.getNameFromScene(scene);
+				this.activate(sceneName);
+			}
+		}
 	}
 
 	public function addScene(scene:Scene) {

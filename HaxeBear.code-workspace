@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "/usr/local/lib/haxe/lib/flixel-addons"
+		},
+		{
+			"path": "/usr/local/lib/haxe/lib/flixel/4,6,1/flixel"
 		}
 	],
 	"settings": {

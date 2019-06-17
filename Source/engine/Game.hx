@@ -13,52 +13,50 @@ class Game extends Sprite {
 	private var startTime:Int;
 	private var elapsed:Float;
 	private var lag:Float;
+	private var maxAccumulation:Float;
+	private var ticks:Int;
+	private var totalTicks:Int;
+	private var elapsedTime:Float;
+	private var timeScale:Int = 1000;
 
 	public var config:GameConfigInterface;
 	public var scene:Scene;
 	public var fps:Float;
-	public var ticks:Int;
-	public var totalTicks:Int;
 
 	public function new() {
 		super();
 		this.config = new Config();
-		this.sceneManager = new SceneManager();
+		this.sceneManager = new SceneManager(this);
 		this.fps = 1000 / this.config.graphics.fps;
+
+		addEventListener(Event.ADDED_TO_STAGE, this.init);
+	}
+
+	private function init(_) {
+		// remove event once initialized
+		removeEventListener(Event.ADDED_TO_STAGE, this.init);
+
 		this.startTime = Lib.getTimer();
 		this.totalTicks = this.getTicks();
 		this.lag = 0;
 
-		this.addScenes();
-		this.startGameLoop();
+		this.sceneManager.initScenes();
+
+		addEventListener(Event.ENTER_FRAME, this.loopGame);
 	}
 
-	private function addScenes() {
-		for (scene in this.config.scenes) {
-			scene.init(this);
-			this.sceneManager.addScene(scene);
-			if (scene.active) {
-				this.scene = scene;
-				var sceneName:String = this.sceneManager.getNameFromScene(scene);
-				this.sceneManager.activate(sceneName);
-			}
-		}
-	}
-
-	private function startGameLoop() {
-		addEventListener(Event.ENTER_FRAME, this.onEnterFrame);
-	}
-
-	private function onEnterFrame(event:Event) {
+	private function loopGame(_) {
 		this.ticks = this.getTicks();
-		this.elapsed = this.ticks - totalTicks;
+		this.elapsed = this.ticks - this.totalTicks;
 		this.totalTicks = this.ticks;
+		this.maxAccumulation = this.fps * 2;
 
 		this.lag += this.elapsed;
-
+		this.lag = (this.lag > this.maxAccumulation) ? this.maxAccumulation : this.lag;
 		while (this.lag >= this.fps) {
 			this.lag -= this.fps;
-			this.update(this.fps / 1000);
+			this.elapsedTime = this.fps / this.timeScale;
+			this.update(this.elapsedTime);
 		}
 	}
 
@@ -70,7 +68,7 @@ class Game extends Sprite {
 		this.scene._update(elapsed);
 	}
 
-	private function getTicks() {
+	private inline function getTicks() {
 		return Lib.getTimer() - this.startTime;
 	}
 }

@@ -16,11 +16,11 @@ class Config implements GameConfigInterface {
 	public var physics:PhysicsConfig = {
 		gravity: {
 			x: 0,
-			y: 500,
+			y: 3000,
 		},
 		iterations: {
-			velocity: 10,
-			position: 10,
+			velocity: 25,
+			position: 25,
 		}
 	};
 
